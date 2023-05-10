@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Typing trainer</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="logo"></i> Keyboard Trainer</div>
+      <div class="results">
+        <div class="indicators">
+          <div class="indicator">
+            <div class="indicator_icon">
+                <img src="icons/speed_icon.svg">
+            </div>
+            <div class="indicator_name">Symbols/min:</div>
+            <div class="indicator_value" id="symbolsPerMinute">0</div>
+          </div>
+          <div class="indicator">
+            <div class="indicator_icon">
+                <img src="icons/time_icon.svg">
+            </div>
+            <div class="indicator_name">Words/min:</div>
+            <div class="indicator_value">0</div>
+          </div>
+          <div class="indicator">
+            <div class="indicator_icon">
+              <img src="icons/mistake_icon.svg">
+            </div>
+            <div class="indicator_name">Mistakes:</div>
+            <div class="indicator_value" id="errorPercent">0%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="devider"></div>
+    <div class="container">
+      <form action="">
+        <input
+          id="input"
+          type="text"
+          class="input unselectable"
+          placeholder=""
+          value="Text..."
+        />
+      </form>
+      <div class="text" id="textExample">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+        mollit anim id est laborum...
+      </div>
+      <div class="keyboard">
+        <div class="line">
+            <div id="letter_`">`</div>
+            <div id="letter_1">1</div>
+            <div id="letter_2">2</div>
+            <div id="letter_3">3</div>
+            <div id="letter_4">4</div>
+            <div id="letter_5">5</div>
+            <div id="letter_6">6</div>
+            <div id="letter_7">7</div>
+            <div id="letter_8">8</div>
+            <div id="letter_9">9</div>
+            <div id="letter_0">0</div>
+            <div id="letter_minus">-</div>
+            <div id="letter_plus">+</div>
+            <div class="backspace" id="letter_backspace">Backspace</div>
+        </div>        
+        <div class="line">
+          <div class="tab" id="letter_tab">Tab</div>
+          <div id="letter_q">Q</div>
+          <div id="letter_w">W</div>
+          <div id="letter_e">E</div>
+          <div id="letter_r">R</div>
+          <div id="letter_t">T</div>
+          <div id="letter_y">Y</div>
+          <div id="letter_u">U</div>
+          <div id="letter_i">I</div>
+          <div id="letter_o">O</div>
+          <div id="letter_p">P</div>
+          <div id="letter_[">[</div>
+          <div id="letter_]">]</div>
+          <div id="letter_slash">\</div>
+        </div>
+        <div class="line">
+          <div class="caps" id="letter_capslock">Caps Lock</div>
+          <div id="letter_a">A</div>
+          <div id="letter_s">S</div>
+          <div id="letter_d">D</div>
+          <div id="letter_f">F</div>
+          <div id="letter_g">G</div>
+          <div id="letter_h">H</div>
+          <div id="letter_j">J</div>
+          <div id="letter_k">K</div>
+          <div id="letter_l">L</div>
+          <div id="letter_:">:</div>
+          <div id="letter_'">'</div>
+          <div class="enter" id="letter_enter">Enter</div>
+        </div>
+        <div class="line">
+          <div class="shift">Shift</div>
+          <div id="letter_z">Z</div>
+          <div id="letter_x">X</div>
+          <div id="letter_c">C</div>
+          <div id="letter_v">V</div>
+          <div id="letter_b">B</div>
+          <div id="letter_n">N</div>
+          <div id="letter_m">M</div>
+          <div id="letter_coma">,</div>
+          <div id="letter_dot">.</div>
+          <div id="letter_questionmark">?</div>
+          <div class="shift">Shift</div>
+        </div>
+        <div class="line">
+          <div class="space" id="letter_space"></div>
+          <div class="alt" id="letter_alt">Alt</div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
