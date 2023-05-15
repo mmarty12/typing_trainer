@@ -21,7 +21,7 @@ body {
 }
 .logo {
   margin: 0 auto;
-  font-family: 'Neutral Face';
+  font-family: "Neutral Face";
   font-weight: 400;
   font-size: 60px;
   padding: 50px 0;
@@ -30,7 +30,7 @@ body {
   color: #ffffff;
 }
 .indicators {
-  font-family: 'NAMU';
+  font-family: "NAMU";
   color: #ffffff;
   display: -webkit-box;
   margin-bottom: 35px;
@@ -70,7 +70,7 @@ body {
   border-bottom: 4px solid #1a6259;
   background-color: #1e1e1e;
   outline: none;
-  font-family: 'NAMU';
+  font-family: "NAMU";
   font-size: 18px;
   transition: all 0.1s ease-in;
   color: #fff;
@@ -82,7 +82,7 @@ body {
   background-color: #fff000;
 }
 .text {
-  font-family: 'NAMU';
+  font-family: "NAMU";
   font-weight: 400;
   margin-bottom: 35px;
   background-color: #303030;
@@ -158,4 +158,7 @@ body {
   text-align: right;
   font-size: 13px;
   margin-right: auto;
+}
+.pressed {
+  background-color: #1a6259 !important;
 }
