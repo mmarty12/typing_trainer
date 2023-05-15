@@ -13,8 +13,8 @@ console.log(party);
 init();
 
 function init() {
-  input.addEventListener("keydown", keydownHandler);
-  input.addEventListener("keyup", keyupHandler);
+  input.addEventListener("keydown", keyDownHandler);
+  input.addEventListener("keyup", keyUpHandler);
 }
 function toggleKeyClass(key, add) {
   const matchingKeys = letters.filter((x) => x.dataset.letters.includes(key));
@@ -28,7 +28,7 @@ function toggleKeyClass(key, add) {
   }
 }
 
-function keydownHandler(event) {
+function keyDownHandler(event) {
   event.preventDefault();
 
   const isSpaceKey = event.key === " ";
@@ -42,7 +42,7 @@ function keydownHandler(event) {
   }
 }
 
-function keyupHandler(event) {
+function keyUpHandler(event) {
   event.preventDefault();
 
   const isSpaceKey = event.key === " ";
