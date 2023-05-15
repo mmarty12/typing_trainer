@@ -2,13 +2,11 @@ const input = document.querySelector("input");
 const letters = Array.from(document.querySelectorAll("[data-letters]"));
 const specs = Array.from(document.querySelectorAll("[data-spec]"));
 
-const text = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-mollit anim id est laborum...`;
+const text = `ass anv anb dd ssa ert lor s-- abc abc fde qwe
+asw wasd wsad uy yy yyy pps ';s we q we ali d adf ety vbv zzx 
+doop ffdr rru n dde kopp kdowwa kksk ert d d d aas ll kjnc ccj
+eoeoe ith as its yor sd plp a zxc fgo daw qw a;okf vvb dfd ,.. f
+fieeh ty alpoi ertp wetkc a[oj] cnvd owasd vnx`;
 
 const party = createParty(text);
 console.log(party);
@@ -34,6 +32,7 @@ function keydownHandler(event) {
   event.preventDefault();
 
   const isSpaceKey = event.key === " ";
+
   const pressedKey = isSpaceKey ? "space" : event.key.toLowerCase();
 
   toggleKeyClass(pressedKey, true);
@@ -47,6 +46,7 @@ function keyupHandler(event) {
   event.preventDefault();
 
   const isSpaceKey = event.key === " ";
+
   const pressedKey = isSpaceKey ? "space" : event.key.toLowerCase();
 
   toggleKeyClass(pressedKey, false);
