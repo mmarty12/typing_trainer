@@ -36,9 +36,11 @@ function keyDownHandler(event) {
   if (pressedKey === 'shift') {
     toggleKeyClass('shift', true);
   }
-  if (isSpaceKey) press(' ');
-  if (pressedKey === 'enter') press('\n');
   press(event.key);
+
+  if (pressedKey === 'enter') {
+    press('\n');
+  }
 }
 
 function keyUpHandler(event) {
@@ -121,6 +123,12 @@ function viewUpdate() {
       .slice(party.currentPressedIndex)
       .split('')
       .map((pressedKey) => {
+        if(party.errors.includes(pressedKey)){
+          const errSpan = document.createElement('span');
+          errSpan.classList.add('hint');
+          errSpan.textContent = pressedKey;
+          return errSpan;
+        }
         return pressedKey;
       })
   );
@@ -132,6 +140,12 @@ function viewUpdate() {
 
     line.append(
       ...shownString[i].split('').map((pressedKey) => {
+        if(party.errors.includes(pressedKey)){
+          const errSpan = document.createElement('span');
+          errSpan.classList.add('hint');
+          errSpan.textContent = pressedKey;
+          return errSpan;
+        }
         return pressedKey;
       })
     );

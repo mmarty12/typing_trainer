@@ -37,9 +37,11 @@ function keyDownHandler(event) {
   if (pressedKey === 'shift') {
     toggleKeyClass('shift', true);
   }
-  if (isSpaceKey) press(' ');
-  if (pressedKey === 'enter') press('\n');
   press(event.key);
+
+  if (pressedKey === 'enter') {
+    press('\n');
+  }
 }
 
 function keyUpHandler(event) {
@@ -93,15 +95,20 @@ function press(pressedKey) {
   const string = party.strings[party.currentStringIndex];
   const mustKey = string[party.currentPressedIndex];
   console.log(pressedKey, mustKey);
-  if (pressedKey === mustKey) {
+
+  if (pressedKey === mustKey ) {
     party.currentPressedIndex++;
     if (string.length <= party.currentPressedIndex) {
       party.currentPressedIndex = 0;
       party.currentStringIndex++;
     }
+
   } else if (!party.errors.includes(mustKey)) party.errors.push(mustKey);
+
   viewUpdate();
 }
+
+
 
 function viewUpdate() {
   const string = party.strings[party.currentStringIndex];
@@ -123,6 +130,13 @@ function viewUpdate() {
       .slice(party.currentPressedIndex)
       .split('')
       .map((pressedKey) => {
+        
+        if(party.errors.includes(pressedKey)){
+          const errSpan = document.createElement('span');
+          errSpan.classList.add('hint');
+          errSpan.textContent = pressedKey;
+          return errSpan;
+        }
         return pressedKey;
       })
   );
@@ -134,6 +148,12 @@ function viewUpdate() {
 
     line.append(
       ...shownString[i].split('').map((pressedKey) => {
+        if(party.errors.includes(pressedKey)){
+          const errSpan = document.createElement('span');
+          errSpan.classList.add('hint');
+          errSpan.textContent = pressedKey;
+          return errSpan;
+        }
         return pressedKey;
       })
     );
