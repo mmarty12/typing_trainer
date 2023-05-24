@@ -208,3 +208,4 @@ function viewUpdate() {
     }
   }
 }
+module.exports = { press };
