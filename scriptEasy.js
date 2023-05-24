@@ -2,8 +2,12 @@ const input = document.querySelector('input');
 const letters = Array.from(document.querySelectorAll('[data-letters]'));
 const specs = Array.from(document.querySelectorAll('[data-spec]'));
 const textExample = document.querySelector('#textExample');
+const symbolsPerMinute = document.querySelector('#symbolsPerMinute');
+const wordsPerMinute = document.querySelector('#wordsPerMinute');
+const errorPercent = document.querySelector('#errorPercent');
 
 const text = `ass anv anb dd ssa ert lor s-- abc abc fde qwe asw wasd wsad`;
+const textLength = text.length;
 
 const party = createParty(text);
 init();
@@ -36,10 +40,17 @@ function keyDownHandler(event) {
   if (pressedKey === 'shift') {
     toggleKeyClass('shift', true);
   }
-  press(event.key);
+
+  if (party.currentPressedIndex <= textLength - 1) {
+    press(event.key);
+  }
 
   if (pressedKey === 'enter') {
     press('\n');
+  }
+
+  if (isSpaceKey) {
+    party.wordCounter++;
   }
 }
 
@@ -61,10 +72,18 @@ function createParty(text) {
     text,
     strings: [],
     maxStringLength: 70,
-    maxShowStrings: 3,
+    maxShowStrings: 1,
     currentStringIndex: 0,
+    maxStringIndex: 1,
     currentPressedIndex: 0,
     errors: [],
+    started: false,
+    startTimer: 0,
+    timerCounter: 0,
+    symbolCounter: 0,
+    wordCounter: 0,
+    errorCounter: 0,
+    statisticFlag: false,
   };
   party.text = party.text.replace(/\n/g, '\n ');
   const words = party.text.split(' ');
@@ -91,6 +110,11 @@ function createParty(text) {
 }
 
 function press(pressedKey) {
+  party.started = true;
+  if (!party.statisticFlag) {
+    party.statisticFlag = true;
+    party.startTimer = Date.now();
+  }
   const string = party.strings[party.currentStringIndex];
   const mustKey = string[party.currentPressedIndex];
   if (pressedKey === mustKey) {
@@ -98,9 +122,26 @@ function press(pressedKey) {
     if (string.length < party.currentPressedIndex) {
       party.currentPressedIndex = 0;
       party.currentStringIndex++;
+      party.statisticFlag = false;
     }
-  } else if (!party.errors.includes(mustKey)) party.errors.push(mustKey);
-  viewUpdate();
+  } else if (!party.errors.includes(mustKey)) {
+    party.errors.push(mustKey);
+    party.errorCounter++;
+  }
+  party.symbolCounter++;
+  party.timerCounter = Date.now() - party.startTimer;
+  if (party.currentStringIndex <= party.maxStringIndex) {
+    viewUpdate();
+  }
+}
+
+function statisticCount() {
+  if (party.started) {
+    symbolsPerMinute.textContent = Math.round((60000 * party.symbolCounter) / party.timerCounter);
+    errorPercent.textContent =
+      Math.floor((10000 * party.errorCounter) / party.symbolCounter / 100) + '%';
+    wordsPerMinute.textContent = Math.round((60000 * party.wordCounter) / party.timerCounter);
+  }
 }
 
 function viewUpdate() {
@@ -123,7 +164,7 @@ function viewUpdate() {
       .slice(party.currentPressedIndex)
       .split('')
       .map((pressedKey) => {
-        if(party.errors.includes(pressedKey)){
+        if (party.errors.includes(pressedKey)) {
           const errSpan = document.createElement('span');
           errSpan.classList.add('hint');
           errSpan.textContent = pressedKey;
@@ -140,7 +181,7 @@ function viewUpdate() {
 
     line.append(
       ...shownString[i].split('').map((pressedKey) => {
-        if(party.errors.includes(pressedKey)){
+        if (party.errors.includes(pressedKey)) {
           const errSpan = document.createElement('span');
           errSpan.classList.add('hint');
           errSpan.textContent = pressedKey;
@@ -153,4 +194,8 @@ function viewUpdate() {
   textExample.innerHTML = '';
   textExample.append(div);
   input.value = string.slice(0, party.currentPressedIndex);
+
+  if (party.currentPressedIndex === textLength) {
+    statisticCount();
+  }
 }
