@@ -1,0 +1,18 @@
+name: Test app
+
+on:
+  push:
+    branches: [ trainer_mainpage_back ]
+  pull_request:
+    branches: [ trainer_mainpage_back ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get repository code
+        uses: actions/checkout@v3
+      - name: Install dependsncies
+        run: npm install
+      - name: Run tests
+        run: npm test
