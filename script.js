@@ -136,7 +136,7 @@ function press(pressedKey) {
   }
   party.symbolCounter++;
   party.timerCounter = Date.now() - party.startTimer;
-  viewUpdate();
+  viewUpdate(party, textExample);
 }
 
 function statisticCount() {
@@ -148,7 +148,7 @@ function statisticCount() {
   }
 }
 
-function viewUpdate() {
+function viewUpdate(party,textExample) {
   const string = party.strings[party.currentStringIndex];
   const shownString = party.strings.slice(
     party.currentStringIndex,
@@ -177,24 +177,24 @@ function viewUpdate() {
         return pressedKey;
       })
   );
+    for (let i = 1; i < shownString.length; i++) {
+      const line = document.createElement('div');
+      line.classList.add('line');
+      div.append(line);
 
-  for (let i = 1; i < shownString.length; i++) {
-    const line = document.createElement('div');
-    line.classList.add('line');
-    div.append(line);
-
-    line.append(
-      ...shownString[i].split('').map((pressedKey) => {
-        if (party.errors.includes(pressedKey)) {
-          const errSpan = document.createElement('span');
-          errSpan.classList.add('hint');
-          errSpan.textContent = pressedKey;
-          return errSpan;
-        }
-        return pressedKey;
-      })
-    );
-  }
+      line.append(
+        ...shownString[i].split('').map((pressedKey) => {
+          if (party.errors.includes(pressedKey)) {
+            const errSpan = document.createElement('span');
+            errSpan.classList.add('hint');
+            errSpan.textContent = pressedKey;
+            return errSpan;
+          }
+          return pressedKey;
+        })
+      );
+    }
+  
   textExample.innerHTML = '';
   textExample.append(div);
   input.value = string.slice(0, party.currentPressedIndex);
@@ -207,5 +207,5 @@ function viewUpdate() {
       input.removeEventListener('keyup', keyUpHandler);
     }
   }
-}
-module.exports = { press };
+} 
+
