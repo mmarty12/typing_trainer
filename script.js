@@ -110,7 +110,6 @@ function createParty() {
   if (string.length) {
     party.strings.push(string.join(' '));
   }
-  return party;
 }
 
 function press(pressedKey) {
@@ -137,7 +136,7 @@ function press(pressedKey) {
   }
   party.symbolCounter++;
   party.timerCounter = Date.now() - party.startTimer;
-  viewUpdate(party, textExample);
+  viewUpdate(textExample);
 }
 
 function statisticCount() {
@@ -149,61 +148,70 @@ function statisticCount() {
   }
 }
 
-function viewUpdate(party, textExample) {
+function viewUpdate(textExample) {
   const string = party.strings[party.currentStringIndex];
   const shownString = party.strings.slice(
     party.currentStringIndex,
     party.currentStringIndex + party.maxShowStrings
   );
-  let div = document.createElement('div');
-  const firstLine = document.createElement('div');
-  firstLine.classList.add('line');
-  div.append(firstLine);
-  const doneLine = document.createElement('span');
-  doneLine.classList.add('done');
-  doneLine.textContent = string.slice(0, party.currentPressedIndex);
 
-  firstLine.append(
-    doneLine,
-    ...string
-      .slice(party.currentPressedIndex)
-      .split('')
-      .map((pressedKey) => {
-        if (party.errors.includes(pressedKey)) {
-          const errSpan = document.createElement('span');
-          errSpan.classList.add('hint');
-          errSpan.textContent = pressedKey;
-          return errSpan;
-        }
-        return pressedKey;
-      })
-  );
-  for (let i = 1; i < shownString.length; i++) {
-    const line = document.createElement('div');
-    line.classList.add('line');
-    div.append(line);
-
-    line.append(
-      ...shownString[i].split('').map((pressedKey) => {
-        if (party.errors.includes(pressedKey)) {
-          const errSpan = document.createElement('span');
-          errSpan.classList.add('hint');
-          errSpan.textContent = pressedKey;
-          return errSpan;
-        }
-        return pressedKey;
-      })
-    );
-  }
-
+  const div = document.createElement('div');
   textExample.innerHTML = '';
   textExample.append(div);
-  input.value = string.slice(0, party.currentPressedIndex);
+
+  const createLine = () => {
+    const line = document.createElement('div');
+    line.classList.add('line');
+    return line;
+  };
+
+  const createSpan = (content, className) => {
+    const span = document.createElement('span');
+    span.textContent = content;
+    span.classList.add(className);
+    return span;
+  };
+
+  const createHintSpan = (content) => {
+    return createSpan(content, 'hint');
+  };
+
+  const createKeyElements = (pressedKeys) => {
+    return pressedKeys.map((pressedKey) => {
+      if (party.errors.includes(pressedKey)) {
+        return createHintSpan(pressedKey);
+      }
+      return pressedKey;
+    });
+  };
+
+  const createLineWithKeys = (pressedKeys) => {
+    const line = createLine();
+    const keyElements = createKeyElements(pressedKeys);
+    line.append(...keyElements);
+    return line;
+  };
+
+  const doneLineContent = string.slice(0, party.currentPressedIndex);
+  const doneLine = createSpan(doneLineContent, 'done');
+  const firstLine = createLine();
+  firstLine.append(
+    doneLine,
+    ...createKeyElements(string.slice(party.currentPressedIndex).split(''))
+  );
+  div.append(firstLine);
+
+  for (let i = 1; i < shownString.length; i++) {
+    const line = createLineWithKeys(shownString[i].split(''));
+    div.append(line);
+  }
+
+  const input = document.getElementById('input');
+  input.value = doneLineContent;
 
   if (party.currentPressedIndex === string.length) {
     statisticCount();
     if (party.currentStringIndex === party.strings.length - 1) {
-      // Досягнуто кінця тексту для набору, зупиняємо оновлення статистики
       input.removeEventListener('keydown', keyDownHandler);
       input.removeEventListener('keyup', keyUpHandler);
     }
