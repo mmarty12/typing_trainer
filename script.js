@@ -9,7 +9,24 @@ const errorPercent = document.querySelector('#errorPercent');
 const text = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in...`;
 const textLength = text.length;
 
-const party = createParty(text);
+const party = {
+  text,
+  strings: [],
+  maxStringLength: 70,
+  maxShowStrings: 5,
+  currentStringIndex: 0,
+  currentPressedIndex: 0,
+  errors: [],
+  started: false,
+  startTimer: 0,
+  timerCounter: 0,
+  symbolCounter: 0,
+  wordCounter: 0,
+  errorCounter: 0,
+  statisticFlag: false,
+};
+
+createParty();
 init();
 
 function init() {
@@ -71,23 +88,7 @@ function keyUpHandler(event) {
   }
 }
 
-function createParty(text) {
-  const party = {
-    text,
-    strings: [],
-    maxStringLength: 70,
-    maxShowStrings: 5,
-    currentStringIndex: 0,
-    currentPressedIndex: 0,
-    errors: [],
-    started: false,
-    startTimer: 0,
-    timerCounter: 0,
-    symbolCounter: 0,
-    wordCounter: 0,
-    errorCounter: 0,
-    statisticFlag: false,
-  };
+function createParty() {
   party.text = party.text.replace(/\n/g, '\n ');
   const words = party.text.split(' ');
   let string = [];
@@ -148,7 +149,7 @@ function statisticCount() {
   }
 }
 
-function viewUpdate(party,textExample) {
+function viewUpdate(party, textExample) {
   const string = party.strings[party.currentStringIndex];
   const shownString = party.strings.slice(
     party.currentStringIndex,
@@ -177,24 +178,24 @@ function viewUpdate(party,textExample) {
         return pressedKey;
       })
   );
-    for (let i = 1; i < shownString.length; i++) {
-      const line = document.createElement('div');
-      line.classList.add('line');
-      div.append(line);
+  for (let i = 1; i < shownString.length; i++) {
+    const line = document.createElement('div');
+    line.classList.add('line');
+    div.append(line);
 
-      line.append(
-        ...shownString[i].split('').map((pressedKey) => {
-          if (party.errors.includes(pressedKey)) {
-            const errSpan = document.createElement('span');
-            errSpan.classList.add('hint');
-            errSpan.textContent = pressedKey;
-            return errSpan;
-          }
-          return pressedKey;
-        })
-      );
-    }
-  
+    line.append(
+      ...shownString[i].split('').map((pressedKey) => {
+        if (party.errors.includes(pressedKey)) {
+          const errSpan = document.createElement('span');
+          errSpan.classList.add('hint');
+          errSpan.textContent = pressedKey;
+          return errSpan;
+        }
+        return pressedKey;
+      })
+    );
+  }
+
   textExample.innerHTML = '';
   textExample.append(div);
   input.value = string.slice(0, party.currentPressedIndex);
@@ -207,5 +208,4 @@ function viewUpdate(party,textExample) {
       input.removeEventListener('keyup', keyUpHandler);
     }
   }
-} 
-
+}
