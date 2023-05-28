@@ -1,13 +1,14 @@
-const input = document.querySelector('input');
-const letters = Array.from(document.querySelectorAll('[data-letters]'));
-const specs = Array.from(document.querySelectorAll('[data-spec]'));
-const textExample = document.querySelector('#textExample');
-const symbolsPerMinute = document.querySelector('#symbolsPerMinute');
-const wordsPerMinute = document.querySelector('#wordsPerMinute');
-const errorPercent = document.querySelector('#errorPercent');
+const settings = {
+  input: document.querySelector('input'),
+  letters: Array.from(document.querySelectorAll('[data-letters]')),
+  specs: Array.from(document.querySelectorAll('[data-spec]')),
+  textExample: document.querySelector('#textExample'),
+  symbolsPerMinute: document.querySelector('#symbolsPerMinute'),
+  wordsPerMinute: document.querySelector('#wordsPerMinute'),
+  errorPercent: document.querySelector('#errorPercent'),
+};
 
 const text = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in...`;
-const textLength = text.length;
 
 const party = {
   text,
@@ -30,16 +31,16 @@ createParty();
 init();
 
 function init() {
-  input.addEventListener('keydown', keyDownHandler);
-  input.addEventListener('keyup', keyUpHandler);
+  settings.input.addEventListener('keydown', keyDownHandler);
+  settings.input.addEventListener('keyup', keyUpHandler);
 }
 
 function toggleKeyClass(key, add) {
-  const matchingKeys = letters.filter((x) => x.dataset.letters.includes(key));
+  const matchingKeys = settings.letters.filter((x) => x.dataset.letters.includes(key));
 
   matchingKeys.forEach((key) => key.classList.toggle('pressed', add));
 
-  const ownSpec = specs.filter((x) => x.dataset.spec === key);
+  const ownSpec = settings.specs.filter((x) => x.dataset.spec === key);
 
   if (ownSpec.length) {
     ownSpec.forEach((spec) => spec.classList.toggle('pressed', add));
@@ -136,15 +137,19 @@ function press(pressedKey) {
   }
   party.symbolCounter++;
   party.timerCounter = Date.now() - party.startTimer;
-  viewUpdate(textExample);
+  viewUpdate(settings.textExample);
 }
 
 function statisticCount() {
   if (party.started) {
-    symbolsPerMinute.textContent = Math.round((60000 * party.symbolCounter) / party.timerCounter);
-    errorPercent.textContent =
+    settings.symbolsPerMinute.textContent = Math.round(
+      (60000 * party.symbolCounter) / party.timerCounter
+    );
+    settings.errorPercent.textContent =
       Math.floor((10000 * party.errorCounter) / party.symbolCounter / 100) + '%';
-    wordsPerMinute.textContent = Math.round((60000 * party.wordCounter) / party.timerCounter);
+    settings.wordsPerMinute.textContent = Math.round(
+      (60000 * party.wordCounter) / party.timerCounter
+    );
   }
 }
 
