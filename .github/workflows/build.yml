@@ -2,9 +2,9 @@ name: Test app
 
 on:
   push:
-    branches: [ trainer_mainpage_back ]
+    branches: [main]
   pull_request:
-    branches: [ trainer_mainpage_back ]
+    branches: [main]
 
 jobs:
   build:
