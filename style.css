@@ -2,6 +2,7 @@
   box-sizing: border-box;
 }
 body {
+  overflow: hidden;
   height: 100%;
   width: 100%;
   margin: 0;
@@ -158,4 +159,47 @@ body {
   text-align: right;
   font-size: 13px;
   margin-right: auto;
+}
+.modal {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.hidden {
+  display: none;
+}
+p {
+  position: absolute;
+  border-radius: 5px;
+  border-color: #947f24;
+  font-size: 1.8rem;
+  color: #d2be0d;
+  top: 33%;
+  right: 40rem;
+  padding: 15pt;
+  animation: 3s show ease;
+}
+#button-exit,
+#button-again {
+  position: absolute;
+  border-radius: 10px;
+  border-color: #f1c71e;
+  min-width: 160px;
+  height: 50px;
+  background-color: black;
+  font-size: 3vmin;
+  color: #d2be0d;
+  cursor: pointer;
+}
+#button-again {
+  right: 38rem;
+  top: 23rem;
+}
+#button-exit {
+  right: 50rem;
+  top: 23rem;
 }
