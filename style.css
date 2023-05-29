@@ -100,6 +100,15 @@ body {
   margin-bottom: 1px;
   letter-spacing: 5px;
 }
+.text .done {
+  color: #d9d9d956;
+}
+.text .hint {
+  color: #c7d415;
+}
+.text.error {
+  color: #ff000077;
+}
 .keyboard .line {
   padding-left: 30px;
   padding-bottom: 1px;
@@ -203,4 +212,7 @@ p {
 #button-exit {
   right: 50rem;
   top: 23rem;
+
+.pressed {
+  background-color: #1a6259 !important;
 }
