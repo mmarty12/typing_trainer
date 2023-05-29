@@ -6,10 +6,11 @@ const settings = {
   symbolsPerMinute: document.querySelector('#symbolsPerMinute'),
   wordsPerMinute: document.querySelector('#wordsPerMinute'),
   errorPercent: document.querySelector('#errorPercent'),
+  restartBtn: document.querySelector('#button-again'),
+  modal: document.querySelector('.modal'),
 };
 
 const text = `ass anv anb dd ssa ert lor s-- abc abc fde qwe asw wasd wsad`;
-const textLength = text.length;
 
 const party = {
   text,
@@ -61,9 +62,7 @@ function keyDownHandler(event) {
     toggleKeyClass('shift', true);
   }
 
-  if (party.currentPressedIndex <= textLength - 1) {
-    press(event.key);
-  }
+  press(event.key);
 
   if (pressedKey === 'enter') {
     press('\n');
@@ -71,6 +70,19 @@ function keyDownHandler(event) {
 
   if (isSpaceKey) {
     party.wordCounter++;
+  }
+
+  if (
+    party.currentStringIndex === party.strings.length - 1 &&
+    party.currentPressedIndex === party.strings[party.currentStringIndex].length
+  ) {
+    input.blur();
+    settings.modal.classList.remove('hidden');
+    settings.restartBtn.addEventListener('click', () => {
+      location.reload();
+      settings.modal.classList.add('hidden');
+    });
+    return;
   }
 }
 

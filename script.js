@@ -6,6 +6,8 @@ const settings = {
   symbolsPerMinute: document.querySelector('#symbolsPerMinute'),
   wordsPerMinute: document.querySelector('#wordsPerMinute'),
   errorPercent: document.querySelector('#errorPercent'),
+  restartBtn: document.querySelector('#button-again'),
+  modal: document.querySelector('.modal'),
 };
 
 const text = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in...`;
@@ -74,6 +76,11 @@ function keyDownHandler(event) {
     party.currentPressedIndex === party.strings[party.currentStringIndex].length
   ) {
     input.blur();
+    settings.modal.classList.remove('hidden');
+    settings.restartBtn.addEventListener('click', () => {
+      location.reload();
+      settings.modal.classList.add('hidden');
+    });
     return;
   }
 }

@@ -116,7 +116,7 @@ body {
   display: flex;
 }
 .keyboard .line div {
-  background: #d9d9d9;
+  background: #d9d9d980;
   width: 49px;
   height: 49px;
   line-height: 42px;
@@ -212,7 +212,7 @@ p {
 #button-exit {
   right: 50rem;
   top: 23rem;
-
+}
 .pressed {
   background-color: #1a6259 !important;
 }
