@@ -2,6 +2,7 @@
   box-sizing: border-box;
 }
 body {
+  overflow: hidden;
   height: 100%;
   width: 100%;
   margin: 0;
@@ -76,7 +77,7 @@ body {
   color: #fff;
 }
 .input.blur {
-  border: 3px solid black;
+  border: 3px solid #000000;
 }
 .input.error {
   background-color: #fff000;
@@ -115,7 +116,7 @@ body {
   display: flex;
 }
 .keyboard .line div {
-  background: rgba(217, 217, 217, 0.5);
+  background: #d9d9d9;
   width: 49px;
   height: 49px;
   line-height: 42px;
@@ -168,6 +169,50 @@ body {
   font-size: 13px;
   margin-right: auto;
 }
+.modal {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #00000066;
+}
+.hidden {
+  display: none;
+}
+p {
+  background-color: #000000;
+  position: absolute;
+  border-radius: 10px;
+  border-color: #947f24;
+  font-size: 1.8rem;
+  color: #d2be0d;
+  top: 33%;
+  right: 40rem;
+  padding: 15pt;
+  animation: 3s show ease;
+}
+#button-exit,
+#button-again {
+  position: absolute;
+  border-radius: 10px;
+  border-color: #f1c71e;
+  min-width: 160px;
+  height: 50px;
+  background-color: #000000;
+  font-size: 3vmin;
+  color: #d2be0d;
+  cursor: pointer;
+}
+#button-again {
+  right: 38rem;
+  top: 23rem;
+}
+#button-exit {
+  right: 50rem;
+  top: 23rem;
+
 .pressed {
   background-color: #1a6259 !important;
 }
