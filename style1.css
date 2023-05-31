@@ -10,7 +10,20 @@
 * {
     box-sizing: border-box;
   }
-  body {
+  ::-webkit-scrollbar {
+    width: 15px;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: #2F2F2F;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #1a6259;
+    border-radius: 10px;
+    border: 3px solid #2F2F2F;
+  }
+  
+ body {
     height: 100%;
     width: 100%;
     margin: 0;
@@ -24,8 +37,8 @@
 .btn_container{
   display: flex;
   justify-content: space-between;
-  margin-left: 380px;
-  margin-right: 380px;
+  margin-left: 580px;
+  margin-right: 580px;
   margin-top: 90px;
 }
 .table-container{
@@ -85,17 +98,17 @@
     margin-right: 25px;
     margin-left: 40px;
 }
-h1{
+ h1{
     font-family: 'Neutral Face';
-    width: 100%;
     font-weight: 200;
-    font-size: 96px;
+    font-size: 70px;
     margin-top: 170px;
     text-align: left;
     margin-left: 80px;
+    margin-right: 80px;
     text-transform: uppercase;
-    color: #ffffff;
-}
+    color: #ffffff; 
+} 
 .second_page h1 {
   text-align: right;
   margin-left: -80px;
@@ -104,12 +117,12 @@ h1{
 }
 .third_page h1{
   margin-top: 210px;
-}
+} 
 p{
-    width: 500px;
+    width: 350px;
     font-family: 'NAMU';
     
-    font-size: 30px;
+    font-size: 20px;
     margin-top: 100px;
     margin-left: 80px;
     color: #ffffff;
@@ -122,30 +135,28 @@ p:after{
   background-color: #1a6259;
   position: absolute;
   margin-top: 260px;
-}
-.menuBatton{
+} 
+.menuButton{
     margin-top: 35px;
     box-sizing: border-box;
 
     position: absolute;
-    width: 314px;
-    height: 102px;
-    right: 450px;
+    width: 290px;
+    height: 90px;
+    right: 550px;
 
     border: 5px solid #1A6259;
     border-radius: 50px;
 
-
-
     font-family: 'Neutral Face';
     font-weight: 700;
-    font-size: 24px;
+    font-size: 20px;
     line-height: 23px;
 
     color: #FFFFFF;
     background-color: transparent;
-}
-.menuBatton:hover{
+} 
+.menuButton:hover{
     background-color: #1A6259;
     transition: 0.3s linear;
 }
@@ -153,7 +164,7 @@ p:after{
   background-color: #1a6259;
   color: #ffffff;
   transition: 0.3s linear;
-}
+} 
 .button{
   font-family: 'NAMU';
   font-size: 20px;
@@ -172,13 +183,13 @@ p:after{
 
 }
 .lvls{
-  width: 360px;
-  height: 220px;
+  width: 260px;
+  height: 200px;
 
   background-color: #484848;
   
   font-family: 'Neutral Face';
-  font-weight: 700;
+  font-weight: 600;
   font-size: 30px;
   line-height: 23px;
 
@@ -192,10 +203,10 @@ p:after{
 .lvls:hover{
   background-color: #1a6259;
   transition: 0.3s linear;
-}
+} 
 table {
 color: #ffffff;
-border-spacing: 60px;
+border-spacing: 10px;
 
 }
 table th {
@@ -203,42 +214,47 @@ table th {
   font-size: 20px;
   text-align: center;
   padding: 10px;
+  border-radius: 10px;
 
-  width: 400px;
-  height: 60px;
-  border-radius: 20px;
-  
-  
-  background-color: #1a6259;
 }
-th, td {
+th {
   padding: 20px;
-}
+  background-color: #1a6259;
+
+} 
 table td {
   font-family: 'NAMU';
   font-size: 20px;
   text-align: center;
-  padding: 10px;
 
-  width: 400px;
-  height: 60px;
-  border-radius: 20px;
+  width: 300px;
+  height: 40px;
 
-  background-color: #727272;
-}
+  border-radius: 10px;
+
+} 
 .table-container{
   background-color: #2F2F2F;
-  margin-left: 300px;
-  margin-right: 300px;
+  width: 1000px;
+  height: 400px;
+  margin: 0 auto;
   margin-top: 120px;
   margin-bottom: 120px;
 
   border-radius: 40px;
 } 
+table tr:nth-child(even) {
+  background-color: #484848;
+  color: #ffffff;
+}
+table tr:nth-child(odd) {
+  background-color: #5a5a5a;
+  color: #ffffff;
+}
 .third_page::after{
   content: '';
   display: block;
-  width: 900px;
+  width: 600px;
   height: 5px;
   background-color: #1a6259;
   margin: 0 auto;
