@@ -1,0 +1,132 @@
+<!-- <!DOCTYPE html> -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Typing trainer</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="modal hidden">
+      <p>Training complete!</p>
+      <button id="button-again">restart</button>
+      <button id="button-exit">exit</button>
+      </div>
+    <div class="container">
+      <div class="logo"></i> Keyboard Trainer</div>
+      <div class="results"> 
+        <div class="indicators">
+          <div class="indicator">
+            <div class="indicator_icon">
+                <img src="icons/speed_icon.svg">
+            </div>
+            <div class="indicator_name">Symbols/min:</div>
+            <div class="indicator_value" id="symbolsPerMinute">0</div>
+          </div>
+          <div class="indicator">
+            <div class="indicator_icon">
+                <img src="icons/time_icon.svg">
+            </div>
+            <div class="indicator_name">Words/min:</div>
+            <div class="indicator_value" id="wordsPerMinute">0</div>
+          </div>
+          <div class="indicator">
+            <div class="indicator_icon">
+              <img src="icons/mistake_icon.svg">
+            </div>
+            <div class="indicator_name">Mistakes:</div>
+            <div class="indicator_value" id="errorPercent">0%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="devider"></div>
+    <div class="container">
+      <form action="">
+        <input
+          id="input"
+          type="text"
+          class="input unselectable"
+          placeholder="Input for text"
+        />
+      </form>
+      <div class="text" id="textExample">
+        <div>
+          <div class="line line-1">
+            <span class="hint">L</span>orem іpsum dolor sit amet, consectetur adipiscing elit, sed do
+          </div>
+          <div class="line">eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim</div>
+          <div class="line">ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut</div>
+          <div class="line">aliquip ex ea commodo consequat. Duis aute irure dolor in...</div>
+      </div>
+      </div>
+      <div class="keyboard">
+        <div class="line">
+            <div id="letter_`" data-letters="`">`</div>
+            <div id="letter_1" data-letters="1">1</div>
+            <div id="letter_2" data-letters="2">2</div>
+            <div id="letter_3" data-letters="3">3</div>
+            <div id="letter_4" data-letters="4">4</div>
+            <div id="letter_5" data-letters="5">5</div>
+            <div id="letter_6" data-letters="6">6</div>
+            <div id="letter_7" data-letters="7">7</div>
+            <div id="letter_8" data-letters="8">8</div>
+            <div id="letter_9" data-letters="9">9</div>
+            <div id="letter_0" data-letters="0">0</div>
+            <div id="letter_minus" data-letters="-">-</div>
+            <div id="letter_plus" data-letters="+">+</div>
+            <div class="backspace" id="letter_backspace" data-spec="backspace">Backspace</div>
+        </div>        
+        <div class="line">
+          <div class="tab" id="letter_tab" data-spec="tab">Tab</div>
+          <div id="letter_q" data-letters="Qq">Q</div>
+          <div id="letter_w" data-letters="Ww">W</div>
+          <div id="letter_e" data-letters="Ee">E</div>
+          <div id="letter_r" data-letters="Rr">R</div>
+          <div id="letter_t" data-letters="Tt">T</div>
+          <div id="letter_y" data-letters="Yy">Y</div>
+          <div id="letter_u" data-letters="Uu">U</div>
+          <div id="letter_i" data-letters="Ii">I</div>
+          <div id="letter_o" data-letters="Oo">O</div>
+          <div id="letter_p" data-letters="Pp">P</div>
+          <div id="letter_[" data-letters="[">[</div>
+          <div id="letter_]" data-letters="]">]</div>
+          <div id="letter_slash" data-letters="\">\</div>
+        </div>
+        <div class="line">
+          <div class="caps" id="letter_capslock" data-spec="capslock">Caps Lock</div>
+          <div id="letter_a" data-letters="Aa">A</div>
+          <div id="letter_s" data-letters="Ss">S</div>
+          <div id="letter_d" data-letters="Dd">D</div>
+          <div id="letter_f" data-letters="Ff">F</div>
+          <div id="letter_g" data-letters="Gg">G</div>
+          <div id="letter_h" data-letters="Hh">H</div>
+          <div id="letter_j" data-letters="Jj">J</div>
+          <div id="letter_k" data-letters="Kk">K</div>
+          <div id="letter_l" data-letters="Ll">L</div>
+          <div id="letter_:" data-letters=":">:</div>
+          <div id="letter_'" data-letters="'">'</div>
+          <div class="enter" id="letter_enter" data-spec="enter">Enter</div>
+        </div>
+        <div class="line">
+          <div class="shift" data-spec="shift">Shift</div>
+          <div id="letter_z" data-letters="Zz">Z</div>
+          <div id="letter_x" data-letters="Xx">X</div>
+          <div id="letter_c" data-letters="Cc">C</div>
+          <div id="letter_v" data-letters="Vv">V</div>
+          <div id="letter_b" data-letters="Bb">B</div>
+          <div id="letter_n" data-letters="Nn">N</div>
+          <div id="letter_m" data-letters="Mm">M</div>
+          <div id="letter_coma" data-letters=",">,</div>
+          <div id="letter_dot" data-letters=".">.</div>
+          <div id="letter_questionmark" data-letters="?">?</div>
+          <div class="shift" data-spec="shift">Shift</div>
+        </div>
+        <div class="line">
+          <div class="space" id="letter_space" data-spec="space"></div>
+          <div class="alt" id="letter_alt" data-spec="alt">Alt</div>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
