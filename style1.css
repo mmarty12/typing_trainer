@@ -37,8 +37,8 @@
 .btn_container{
   display: flex;
   justify-content: space-between;
-  margin-left: 580px;
-  margin-right: 580px;
+  margin-left: 380px;
+  margin-right: 380px;
   margin-top: 90px;
 }
 .table-container{
@@ -130,7 +130,7 @@ p{
 p:after{
   content: '';
   display: block;
-  width:420px;
+  width:720px;
   height: 5px;
   background-color: #1a6259;
   position: absolute;
@@ -183,8 +183,8 @@ p:after{
 
 }
 .lvls{
-  width: 260px;
-  height: 200px;
+  width: 460px;
+  height: 150px;
 
   background-color: #484848;
   
