@@ -212,7 +212,7 @@ p {
 #button-exit {
   right: 50rem;
   top: 23rem;
-
+}
 .pressed {
   background-color: #1a6259 !important;
 }
