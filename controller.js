@@ -1,4 +1,6 @@
 const { json } = require('express');
+const User = require('./user');
+const Role = require('./roles');
 
 class Сontroller {
   async registration(req, res) {
@@ -11,6 +13,10 @@ class Сontroller {
   }
   async getUsers(req, res) {
     try {
+      const userRole = new Role();
+      const adminRole = new Role({ value: 'ADMIN' });
+      await userRole.save();
+      await adminRole.save();
       res.json('server works');
     } catch (e) {}
   }
