@@ -37,8 +37,8 @@
         <div  id="levels" class="hide"></div>
         <h1>Levels</h1>
         <div class="btn_container">
-          <button class="lvls"><a href="easy_lvl.html">Easy</a></button>
-          <button class="lvls"><a href="hard_lvl.html">Hard</a></button>
+          <button onclick="openNewTab()" class="lvls">Easy</button>
+          <button onclick="openNewTab2()" class="lvls">Hard</button>
         </div>
       </div>
     </div>
@@ -88,5 +88,13 @@
    <footer>
     © 2023
    </footer>
+   <script>
+      function openNewTab() {
+        window.location.href = "easy_lvl.html";
+    }
+    function openNewTab2() {
+      window.location.href = "hard_lvl.html";
+    }
+   </script>
   </body>
 </html>

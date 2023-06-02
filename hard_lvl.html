@@ -9,7 +9,7 @@
     <div class="modal hidden">
       <p>Training complete!</p>
       <button id="button-again">restart</button>
-      <button id="button-exit">exit</button>
+      <button  onclick="openNewTab()" id="button-exit">exit</button>
       </div>
     <div class="container">
       <div class="logo"></i> Keyboard Trainer</div>
@@ -128,5 +128,11 @@
       </div>
     </div>
     <script src="script.js"></script>
+    <script>
+      function openNewTab() {
+        window.close("");
+        window.open("index.html");
+    }
+    </script>
   </body>
 </html>

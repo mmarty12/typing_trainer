@@ -17,9 +17,6 @@ body {
 .devider {
   padding-bottom: 30px;
 }
-.hidden {
-  display: none;
-}
 .logo {
   margin: 0 auto;
   font-family: 'Neutral Face';
@@ -171,25 +168,27 @@ body {
 }
 .modal {
   position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
   width: 100%;
-  height: 100%;
+  height: 100%; 
   background-color: #00000066;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
 }
 .hidden {
   display: none;
 }
 p {
   background-color: #000000;
-  position: absolute;
   border-radius: 10px;
+  margin-top: -300px;
+  
   border-color: #947f24;
   font-size: 1.8rem;
   color: #d2be0d;
-  top: 33%;
-  right: 40rem;
+
+  text-align: center;
   padding: 15pt;
   animation: 3s show ease;
 }
@@ -206,12 +205,14 @@ p {
   cursor: pointer;
 }
 #button-again {
-  right: 38rem;
-  top: 23rem;
+margin: 0 auto;
+  top: 25rem;
+  left: 45rem;
 }
 #button-exit {
-  right: 50rem;
-  top: 23rem;
+  margin: 0 auto;
+  top: 25rem;
+  right: 45rem;
 }
 .pressed {
   background-color: #1a6259 !important;

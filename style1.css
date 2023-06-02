@@ -33,12 +33,13 @@
         width: 100%;
         max-width: 100%;
         margin: 0 auto;
+        position: relative;
     }
 .btn_container{
   display: flex;
   justify-content: space-between;
-  margin-left: 180px;
-  margin-right: 180px;
+  margin-left: 5%;
+  margin-right: 5%;
   margin-top: 90px;
 }
 .table-container{
@@ -143,7 +144,8 @@ p:after{
     position: absolute;
     width: 290px;
     height: 90px;
-    right: 550px;
+    right: 20%;
+   
 
     border: 5px solid #1A6259;
     border-radius: 50px;
@@ -192,14 +194,12 @@ p:after{
   font-weight: 600;
   font-size: 30px;
   line-height: 23px;
+  color: #ffffff;
 
   border-radius: 40px;
   border: none;
 }
-.lvls a{
-  text-decoration: none;
-  color: #ffffff;
-}
+
 .lvls:hover{
   background-color: #1a6259;
   transition: 0.3s linear;
