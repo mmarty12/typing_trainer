@@ -11,7 +11,7 @@ const settings = {
 };
 
 function generateRandomSequence() {
-  const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+  const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890:,.?`"';
   const maxCharacters = 50;
   let sequence = '';
 
