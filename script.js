@@ -1,3 +1,5 @@
+import text from './texts.js';
+
 const settings = {
   input: document.querySelector('input'),
   letters: Array.from(document.querySelectorAll('[data-letters]')),
@@ -9,8 +11,6 @@ const settings = {
   restartBtn: document.querySelector('#button-again'),
   modal: document.querySelector('.modal'),
 };
-
-const text = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in...`;
 
 const party = {
   text,
