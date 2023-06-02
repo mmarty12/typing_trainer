@@ -10,10 +10,25 @@ const settings = {
   modal: document.querySelector('.modal'),
 };
 
-const text = `ass anv anb dd ssa ert lor s-- abc abc fde qwe asw wasd wsad`;
+function generateRandomSequence() {
+  const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890:,.?`"';
+  const maxCharacters = 50;
+  let sequence = '';
+
+  while (sequence.length < maxCharacters) {
+    const sequenceLength = Math.floor(Math.random() * 3) + 2; 
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    const randomSubstring = characters.substring(randomIndex, randomIndex + sequenceLength);
+    sequence += randomSubstring + ' ';
+  }
+
+  return sequence.trim(); 
+}
+
+const randomSequence = generateRandomSequence();
 
 const party = {
-  text,
+  randomSequence,
   strings: [],
   maxStringLength: 70,
   maxShowStrings: 1,
@@ -100,8 +115,8 @@ function keyUpHandler(event) {
 }
 
 function createParty() {
-  party.text = party.text.replace(/\n/g, '\n ');
-  const words = party.text.split(' ');
+  party.randomSequence = party.randomSequence.replace(/\n/g, '\n ');
+  const words = party.randomSequence.split(' ');
   let string = [];
 
   for (const word of words) {
