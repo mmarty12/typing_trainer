@@ -16,7 +16,7 @@
     <nav class="nav">
       <a class="nav__link" href="#main">Головна</a>
       <a class="nav__link" href="#levels">Режими</a>
-      <a class="nav__link" href="#liders">Таблиця лідерів</a>
+      <a class="nav__link" href="#leaders">Таблиця лідерів</a>
       <a class="nav__link" href="#">Особистий кабінет</a>
       <img class="icon" src="icons/icon _person.svg">
       <button class="button">Account</button>
@@ -37,15 +37,15 @@
         <div  id="levels" class="hide"></div>
         <h1>Levels</h1>
         <div class="btn_container">
-          <button class="lvls"><a href="easy_lvl.html">Easy</a></button>
-          <button class="lvls"><a href="index.html">Hard</a></button>
+          <button onclick="openNewTab()" class="lvls">Easy</button>
+          <button onclick="openNewTab2()" class="lvls">Hard</button>
         </div>
       </div>
     </div>
 
     <div class="third_page">
       <div>
-        <h1 class="table_liders" id="liders">Leaders</h1>
+        <h1 class="table_leaders" id="leaders">Leaders</h1>
         <div class="table-container">
           <table>
           <tbody>
@@ -116,5 +116,13 @@
     </div>    
    </div>
    <script src="pop_up.js"></script>
+   <script>
+    function openNewTab() {
+      window.location.href = "easy_lvl.html";
+  }
+  function openNewTab2() {
+    window.location.href = "hard_lvl.html";
+  }
+ </script>
   </body>
 </html>
