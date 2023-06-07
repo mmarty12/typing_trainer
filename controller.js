@@ -65,3 +65,5 @@ class Сontroller {
 }
 
 module.exports = new Сontroller();
+
+module.exports = Сontroller;
