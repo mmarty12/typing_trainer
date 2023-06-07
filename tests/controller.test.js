@@ -49,35 +49,37 @@ describe('Controller Tests', () => {
           password: 'testpassword',
         },
       };
-
+    
       const res = {
         status: jest.fn().mockReturnThis(),
         json: jest.fn(),
+        redirect: jest.fn(),
       };
-
+    
       validationResult.mockReturnValueOnce({ isEmpty: jest.fn().mockReturnValueOnce(true) });
       User.findOne.mockResolvedValueOnce(null);
-      Role.findOne.mockResolvedValueOnce({ value: 'USER' });
       bcrypt.hashSync.mockReturnValueOnce('hashedPassword');
-
+      Role.findOne.mockResolvedValueOnce({ value: 'USER' });
+    
       const saveMock = jest.fn();
       const userMock = {
         save: saveMock,
       };
       User.mockReturnValueOnce(userMock);
-
+    
       await controller.registration(req, res);
-
-      expect(res.json).toHaveBeenCalledWith({ message: 'User was successfully created!' });
+    
+      expect(res.redirect).toHaveBeenCalledWith('signup_successful.html');
       expect(User.findOne).toHaveBeenCalledWith({ username: 'testuser' });
-      expect(Role.findOne).toHaveBeenCalledWith({ value: 'USER' });
       expect(bcrypt.hashSync).toHaveBeenCalledWith('testpassword', 8);
+      expect(Role.findOne).toHaveBeenCalledWith({ value: 'USER' });
       expect(User).toHaveBeenCalledWith({
         username: 'testuser',
         password: 'hashedPassword',
         roles: ['USER'],
       });
       expect(saveMock).toHaveBeenCalled();
+      expect(res.json).not.toHaveBeenCalled();
     });
 
     test('should return an error if there are validation errors', async () => {
@@ -122,26 +124,27 @@ describe('Controller Tests', () => {
   });
 
   describe('login method', () => {
-    test('should log in a user and return a token if credentials are valid', async () => {
+    test('should log in a user and redirect to login_successful.html if credentials are valid', async () => {
       User.findOne.mockResolvedValueOnce({
         _id: 'testUserId',
         username: 'testuser',
         password: 'hashedPassword',
       });
       bcrypt.compareSync.mockReturnValueOnce(true);
-      jwt.sign.mockReturnValueOnce('testToken');
-
+    
       req.body.username = 'testuser';
       req.body.password = 'testpassword';
-
+    
+      const redirectMock = jest.fn();
+      const res = {
+        redirect: redirectMock,
+      };
+    
       await controller.login(req, res);
-
-      expect(res.json).toHaveBeenCalledWith({ token: 'testToken' });
+    
+      expect(redirectMock).toHaveBeenCalledWith('login_successful.html');
       expect(User.findOne).toHaveBeenCalledWith({ username: 'testuser' });
       expect(bcrypt.compareSync).toHaveBeenCalledWith('testpassword', 'hashedPassword');
-      expect(jwt.sign).toHaveBeenCalledWith({ id: 'testUserId', roles: undefined }, secret, {
-        expiresIn: '24h',
-      });
     });
 
     test('should return an error if the user does not exist', async () => {

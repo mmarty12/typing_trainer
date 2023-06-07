@@ -31,7 +31,7 @@ class Сontroller {
       const user = new User({ username, password: hashPassword, roles: [userRole.value] });
       await user.save();
       res.redirect('signup_successful.html');
-      return res.json({ message: `User was successfully created!` });
+      //return res.json({ message: `User was successfully created!` });
     } catch (e) {
       console.log(e);
       res.status(400).json({ message: `Registration error` });
@@ -50,7 +50,7 @@ class Сontroller {
       }
       const token = generateAccessToken(user._id, user.roles);
       res.redirect('login_successful.html');
-      return res.json({ token });
+      //return res.json({ token });
     } catch (e) {
       console.log(e);
       res.status(400).json({ message: `Login error` });
