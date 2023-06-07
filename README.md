@@ -26,16 +26,28 @@ Coursework for software development methodologies course.
 - output statistics (characters/min, words/min, number of errors)
 - writing and providing interaction with the user database
 - implementation of the user registration/authentication process, encryption of passwords using special functions (bcrypt)
-- leaderboard to keep track of progress
 
 ## How to use
- Just open last update on [gh-pages](https://github.com/mmarty12/typing_trainer/deployments/activity_log?environment=github-pages)
+There are two options to use the application. The first one is direct usage via  `gh-pages`. It is intended for users who don't want to register/log in and download the whole project locally. 
+You just need to go to the [gh-pages](https://github.com/mmarty12/typing_trainer/deployments/activity_log?environment=github-pages) section and open an active deployment.
+
+In order to use the project with authorization/registration, it is necessary to do the following:
  
- To run test you need to install projet localy and run:
+### Dowload the project locally
+
+### Install dependencies
+```
+npm install express nodemon
+```
+### Run server 
+```
+npm start
+```
+### To run tests you need to haveto have npm and Jest library  installed:
  ```
-npm test
-```
-But firstly you need to have npm installed on your machine and library Jest:
-```
 npm install jest jestdom
+```
+### Run tests
+```
+npm test
 ```
