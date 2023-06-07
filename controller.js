@@ -30,6 +30,7 @@ class Сontroller {
       const userRole = await Role.findOne({ value: 'USER' });
       const user = new User({ username, password: hashPassword, roles: [userRole.value] });
       await user.save();
+      res.redirect('signup_successful.html');
       return res.json({ message: `User was successfully created!` });
     } catch (e) {
       console.log(e);
@@ -48,6 +49,7 @@ class Сontroller {
         return res.status(400).json({ message: `Invalid password` });
       }
       const token = generateAccessToken(user._id, user.roles);
+      res.redirect('login_successful.html');
       return res.json({ token });
     } catch (e) {
       console.log(e);
@@ -63,7 +65,5 @@ class Сontroller {
     }
   }
 }
-
-module.exports = new Сontroller();
 
 module.exports = Сontroller;

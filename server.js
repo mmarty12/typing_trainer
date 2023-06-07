@@ -2,7 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const router = require('./routers');
-const { collection } = require('./user');
+const Controller = require('./controller');
+const controller = new Controller();
+const { registration } = controller;
+const { login } = controller;
 const PORT = process.env.PORT || 5000;
 
 const app = express();
@@ -29,21 +32,11 @@ db.once('open', () => {
 });
 
 app.post('/signup', (req, res) => {
-  const name = req.body.username;
-  const password = req.body.password;
+  registration(req, res);
+});
 
-  const data = {
-    username: name,
-    password: password,
-  };
-
-  db.collection('users').insertOne(data, (err, collection) => {
-    if (err) {
-      throw err;
-    }
-    console.log("Record successful!");
-  });
-  return res.redirect('signup_successful.html');
+app.post('/auth', (req, res) => {
+  login(req, res);
 });
 
 app.get('/', (req, res) => {

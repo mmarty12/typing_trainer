@@ -1,7 +1,10 @@
 const Router = require('express');
 const router = new Router();
-const controller = require('./controller');
+const Controller = require('./controller');
 const { check } = require('express-validator');
+
+const constructor = Controller.prototype.constructor;
+const controller = new constructor();
 
 router.post(
   '/registration',
