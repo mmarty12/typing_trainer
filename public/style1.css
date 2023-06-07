@@ -413,3 +413,9 @@ input {
   font-size: 30px;
   color: #484848;
 }
+input:invalid{
+  border-bottom: 4px solid #a90000;
+}
+input:not(:focus):invalid{
+  border-bottom: 4px solid #1a6259;
+}
