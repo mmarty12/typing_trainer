@@ -11,18 +11,22 @@ const settings = {
 };
 
 function generateRandomSequence() {
-  const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890:,.?`"';
+  const characters =
+    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890:,.?`"';
   const maxCharacters = 50;
   let sequence = '';
 
   while (sequence.length < maxCharacters) {
-    const sequenceLength = Math.floor(Math.random() * 3) + 2; 
+    const sequenceLength = Math.floor(Math.random() * 3) + 2;
     const randomIndex = Math.floor(Math.random() * characters.length);
-    const randomSubstring = characters.substring(randomIndex, randomIndex + sequenceLength);
+    const randomSubstring = characters.substring(
+      randomIndex,
+      randomIndex + sequenceLength
+    );
     sequence += randomSubstring + ' ';
   }
 
-  return sequence.trim(); 
+  return sequence.trim();
 }
 
 const randomSequence = generateRandomSequence();
@@ -54,7 +58,9 @@ function init() {
   viewUpdate();
 }
 function toggleKeyClass(key, add) {
-  const matchingKeys = settings.letters.filter((x) => x.dataset.letters.includes(key));
+  const matchingKeys = settings.letters.filter((x) =>
+    x.dataset.letters.includes(key)
+  );
 
   matchingKeys.forEach((key) => key.classList.toggle('pressed', add));
 
@@ -120,7 +126,8 @@ function createParty() {
   let string = [];
 
   for (const word of words) {
-    const newStringLength = [...string, word].join(' ').length + !word.includes('\n');
+    const newStringLength =
+      [...string, word].join(' ').length + !word.includes('\n');
 
     if (newStringLength > party.maxStringLength) {
       party.strings.push(string.join(' ') + ' ');
@@ -165,16 +172,27 @@ function press(pressedKey) {
   }
 }
 
-function statisticCount() {
+function statisticCount(party, settings) {
   if (party.started) {
-    settings.symbolsPerMinute.textContent = Math.round(
-      (60000 * party.symbolCounter) / party.timerCounter
-    );
-    settings.errorPercent.textContent =
-      Math.floor((10000 * party.errorCounter) / party.symbolCounter / 100) + '%';
-    settings.wordsPerMinute.textContent = Math.round(
-      (60000 * party.wordCounter) / party.timerCounter
-    );
+    const symbolsPerMinute =
+      party.timerCounter !== 0
+        ? Math.round((60000 * party.symbolCounter) / party.timerCounter)
+        : 0;
+
+    const errorPercent =
+      party.symbolCounter !== 0
+        ? Math.floor((10000 * party.errorCounter) / party.symbolCounter / 100) +
+          '%'
+        : '0%';
+
+    const wordsPerMinute =
+      party.timerCounter !== 0
+        ? Math.round((60000 * party.wordCounter) / party.timerCounter)
+        : 0;
+
+    settings.symbolsPerMinute.textContent = symbolsPerMinute.toString();
+    settings.errorPercent.textContent = errorPercent;
+    settings.wordsPerMinute.textContent = wordsPerMinute.toString();
   }
 }
 

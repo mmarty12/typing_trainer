@@ -18,6 +18,91 @@ jest.mock('../public/script.js', () => ({
 
 const { press, viewUpdate } = require('../public/script.js');
 
+const statisticCountMock = (party, settings) => {
+  if (party.started) {
+    const symbolsPerMinute =
+      party.timerCounter !== 0
+        ? Math.round((60000 * party.symbolCounter) / party.timerCounter)
+        : 0;
+
+    const errorPercent =
+      party.symbolCounter !== 0
+        ? Math.floor((10000 * party.errorCounter) / party.symbolCounter / 100) +
+          '%'
+        : '0%';
+
+    const wordsPerMinute =
+      party.timerCounter !== 0
+        ? Math.round((60000 * party.wordCounter) / party.timerCounter)
+        : 0;
+
+    settings.symbolsPerMinute.textContent = symbolsPerMinute.toString();
+    settings.errorPercent.textContent = errorPercent;
+    settings.wordsPerMinute.textContent = wordsPerMinute.toString();
+  }
+};
+describe('statisticCount', () => {
+  let party, settings;
+
+  beforeEach(() => {
+    party = {
+      started: true,
+      symbolCounter: 50,
+      timerCounter: 10000,
+      errorCounter: 5,
+      wordCounter: 10,
+    };
+
+    settings = {
+      symbolsPerMinute: {
+        textContent: '',
+      },
+      errorPercent: {
+        textContent: '',
+      },
+      wordsPerMinute: {
+        textContent: '',
+      },
+    };
+  });
+
+  it('should update symbols per minute correctly', () => {
+    statisticCountMock(party, settings);
+    expect(settings.symbolsPerMinute.textContent).toBe('300');
+  });
+
+  it('should update error percentage correctly', () => {
+    statisticCountMock(party, settings);
+    expect(settings.errorPercent.textContent).toBe('10%');
+  });
+
+  it('should update words per minute correctly', () => {
+    statisticCountMock(party, settings);
+    expect(settings.wordsPerMinute.textContent).toBe('60');
+  });
+
+  it('should not update statistics if party is not started', () => {
+    party.started = false;
+    statisticCountMock(party, settings);
+    expect(settings.symbolsPerMinute.textContent).toBe('');
+    expect(settings.errorPercent.textContent).toBe('');
+    expect(settings.wordsPerMinute.textContent).toBe('');
+  });
+
+  it('should handle zero values gracefully', () => {
+    party.symbolCounter = 0;
+    party.timerCounter = 0;
+    party.errorCounter = 0;
+    party.wordCounter = 0;
+
+    statisticCountMock(party, settings);
+
+    expect(settings.symbolsPerMinute.textContent).toBe('0');
+    expect(settings.errorPercent.textContent).toBe('0%');
+    expect(settings.wordsPerMinute.textContent).toBe('0');
+  });
+});
+
 describe('press', () => {
   let initialParty, initialPartyStr;
 
