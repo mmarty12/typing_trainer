@@ -315,12 +315,13 @@ describe('viewUpdate', () => {
   let textExample;
 
   //helper function to create lines
-  const createLinesHelper = party.strings.map((string) => {
-    const line = document.createElement('div');
-    line.classList.add('line');
-    line.textContent = string;
-    return line;
-  });
+  const createLinesHelper = (party) =>
+    party.strings.map((string) => {
+      const line = document.createElement('div');
+      line.classList.add('line');
+      line.textContent = string;
+      return line;
+    });
 
   beforeEach(() => {
     textExample = document.createElement('div');
@@ -341,7 +342,7 @@ describe('viewUpdate', () => {
       errors: [],
     };
 
-    createLinesHelper.forEach((line) => {
+    createLinesHelper(party).forEach((line) => {
       textExample.appendChild(line);
     });
 
@@ -361,7 +362,7 @@ describe('viewUpdate', () => {
       errors: [],
     };
 
-    createLinesHelper.forEach((line) => {
+    createLinesHelper(party).forEach((line) => {
       textExample.appendChild(line);
     });
 
