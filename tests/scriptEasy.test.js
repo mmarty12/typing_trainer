@@ -21,20 +21,15 @@ const { press, viewUpdate } = require('../public/script.js');
 const statisticCountMock = (party, settings) => {
   if (party.started) {
     const symbolsPerMinute =
-      party.timerCounter !== 0
-        ? Math.round((60000 * party.symbolCounter) / party.timerCounter)
-        : 0;
+      party.timerCounter !== 0 ? Math.round((60000 * party.symbolCounter) / party.timerCounter) : 0;
 
     const errorPercent =
       party.symbolCounter !== 0
-        ? Math.floor((10000 * party.errorCounter) / party.symbolCounter / 100) +
-          '%'
+        ? Math.floor((10000 * party.errorCounter) / party.symbolCounter / 100) + '%'
         : '0%';
 
     const wordsPerMinute =
-      party.timerCounter !== 0
-        ? Math.round((60000 * party.wordCounter) / party.timerCounter)
-        : 0;
+      party.timerCounter !== 0 ? Math.round((60000 * party.wordCounter) / party.timerCounter) : 0;
 
     settings.symbolsPerMinute.textContent = symbolsPerMinute.toString();
     settings.errorPercent.textContent = errorPercent;
@@ -313,6 +308,27 @@ describe('press', () => {
 });
 
 describe('viewUpdate', () => {
+  let textExample;
+
+  //helper function to create lines
+  const createLinesHelper = (party) =>
+    party.strings.map((string) => {
+      const line = document.createElement('div');
+      line.classList.add('line');
+      line.textContent = string;
+      return line;
+    });
+
+  beforeEach(() => {
+    textExample = document.createElement('div');
+    input = document.createElement('input');
+    document.body.appendChild(textExample);
+  });
+
+  afterEach(() => {
+    document.body.removeChild(textExample);
+  });
+
   it('should create correct HTML structure for displaying lines', () => {
     const party = {
       strings: ['Lorem ipsum dolor sit'],
@@ -424,74 +440,47 @@ describe('viewUpdate', () => {
     expect(errSpan2.textContent).toBe('s');
   });
 
-  describe('viewUpdate', () => {
-    let textExample;
+  it('should correctly update the view with multiple lines', () => {
+    const party = {
+      strings: ['Lorem ipsum', 'dolor sit amet'],
+      currentStringIndex: 0,
+      maxShowStrings: 2,
+      currentPressedIndex: 0,
+      errors: [],
+    };
 
-    //helper function to create lines
-    const createLinesHelper = (party) =>
-      party.strings.map((string) => {
-        const line = document.createElement('div');
-        line.classList.add('line');
-        line.textContent = string;
-        return line;
-      });
-
-    beforeEach(() => {
-      textExample = document.createElement('div');
-      input = document.createElement('input');
-      document.body.appendChild(textExample);
+    createLinesHelper(party).forEach((line) => {
+      textExample.appendChild(line);
     });
 
-    afterEach(() => {
-      document.body.removeChild(textExample);
+    viewUpdate(party, textExample);
+
+    const updatedLines = textExample.querySelectorAll('.line');
+
+    expect(updatedLines.length).toBe(2);
+  });
+
+  it('should correctly update the view when the end of the text is reached', () => {
+    const party = {
+      strings: ['Lorem ipsum', 'dolor sit amet', 'consectetur adipiscing elit'],
+      currentStringIndex: 2,
+      maxShowStrings: 2,
+      currentPressedIndex: 14,
+      errors: [],
+    };
+
+    createLinesHelper(party).forEach((line) => {
+      textExample.appendChild(line);
     });
 
-    it('should correctly update the view with multiple lines', () => {
-      const party = {
-        strings: ['Lorem ipsum', 'dolor sit amet'],
-        currentStringIndex: 0,
-        maxShowStrings: 2,
-        currentPressedIndex: 0,
-        errors: [],
-      };
+    viewUpdate(party, textExample);
 
-      createLinesHelper(party).forEach((line) => {
-        textExample.appendChild(line);
-      });
+    const updatedLines = textExample.querySelectorAll('.line');
+    const lastLineText = updatedLines[updatedLines.length - 1]?.textContent;
+    const hintSpans = textExample.querySelectorAll('.hint');
 
-      viewUpdate(party, textExample);
-
-      const updatedLines = textExample.querySelectorAll('.line');
-
-      expect(updatedLines.length).toBe(2);
-    });
-
-    it('should correctly update the view when the end of the text is reached', () => {
-      const party = {
-        strings: [
-          'Lorem ipsum',
-          'dolor sit amet',
-          'consectetur adipiscing elit',
-        ],
-        currentStringIndex: 2,
-        maxShowStrings: 2,
-        currentPressedIndex: 14,
-        errors: [],
-      };
-
-      createLinesHelper(party).forEach((line) => {
-        textExample.appendChild(line);
-      });
-
-      viewUpdate(party, textExample);
-
-      const updatedLines = textExample.querySelectorAll('.line');
-      const lastLineText = updatedLines[updatedLines.length - 1]?.textContent;
-      const hintSpans = textExample.querySelectorAll('.hint');
-
-      expect(updatedLines.length).toBe(party.strings.length);
-      expect(lastLineText).toBe(party.strings[2]);
-      expect(hintSpans.length).toBe(0);
-    });
+    expect(updatedLines.length).toBe(party.strings.length);
+    expect(lastLineText).toBe(party.strings[2]);
+    expect(hintSpans.length).toBe(0);
   });
 });
