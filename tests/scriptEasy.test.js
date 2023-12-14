@@ -345,33 +345,25 @@ describe('viewUpdate', () => {
     expect(doneLine.classList.contains('done')).toBe(true);
   });
 
-  it('should display pressed keys and errors correctly', () => {
+  it('should display pressed keys correctly', () => {
     const party = {
       strings: ['Lorem ipsum'],
       currentStringIndex: 0,
       currentPressedIndex: 6,
-      errors: ['a', 's'],
+      errors: [],
       maxShowStrings: 5,
     };
     const div = document.createElement('div');
     const firstLine = document.createElement('div');
     const doneLine = document.createElement('span');
-    const errSpan1 = document.createElement('span');
-    const errSpan2 = document.createElement('span');
     const textExample = document.createElement('div');
 
     doneLine.textContent = 'Lorem ';
-    errSpan1.textContent = 'i';
-    errSpan2.textContent = 's';
     firstLine.appendChild(doneLine);
-    firstLine.appendChild(errSpan1);
     firstLine.appendChild(document.createTextNode('ipsum'));
-    firstLine.appendChild(errSpan2);
 
     firstLine.classList.add('line');
     doneLine.classList.add('done');
-    errSpan1.classList.add('hint');
-    errSpan2.classList.add('hint');
 
     div.appendChild(firstLine);
 
@@ -386,79 +378,120 @@ describe('viewUpdate', () => {
     expect(firstLine.firstChild).toBe(doneLine);
     expect(doneLine.classList.contains('done')).toBe(true);
     expect(doneLine.textContent).toBe('Lorem ');
-    expect(firstLine.childNodes[1]).toBe(errSpan1);
+    expect(firstLine.childNodes[1].textContent).toBe('ipsum');
+  });
+
+  it('should display errors correctly', () => {
+    const party = {
+      strings: ['Lorem ipsum'],
+      currentStringIndex: 0,
+      currentPressedIndex: 6,
+      errors: ['i', 's'],
+      maxShowStrings: 5,
+    };
+    const div = document.createElement('div');
+    const firstLine = document.createElement('div');
+    const errSpan1 = document.createElement('span');
+    const errSpan2 = document.createElement('span');
+    const textExample = document.createElement('div');
+
+    errSpan1.textContent = 'i';
+    errSpan2.textContent = 's';
+    firstLine.appendChild(errSpan1);
+    firstLine.appendChild(document.createTextNode('ipsum'));
+    firstLine.appendChild(errSpan2);
+
+    firstLine.classList.add('line');
+    errSpan1.classList.add('hint');
+    errSpan2.classList.add('hint');
+
+    div.appendChild(firstLine);
+
+    viewUpdate(party, textExample);
+
+    textExample.appendChild(div);
+
+    expect(textExample.innerHTML).toBe(div.outerHTML);
+    expect(div.childElementCount).toBe(1);
+    expect(div.firstChild).toBe(firstLine);
+    expect(firstLine.classList.contains('line')).toBe(true);
+    expect(firstLine.childNodes[0]).toBe(errSpan1);
     expect(errSpan1.classList.contains('hint')).toBe(true);
     expect(errSpan1.textContent).toBe('i');
-    expect(firstLine.childNodes[2].textContent).toBe('ipsum');
-    expect(firstLine.childNodes[3]).toBe(errSpan2);
+    expect(firstLine.childNodes[1].textContent).toBe('ipsum');
+    expect(firstLine.childNodes[2]).toBe(errSpan2);
     expect(errSpan2.classList.contains('hint')).toBe(true);
     expect(errSpan2.textContent).toBe('s');
   });
-});
 
-describe('viewUpdate', () => {
-  let textExample;
+  describe('viewUpdate', () => {
+    let textExample;
 
-  //helper function to create lines
-  const createLinesHelper = (party) =>
-    party.strings.map((string) => {
-      const line = document.createElement('div');
-      line.classList.add('line');
-      line.textContent = string;
-      return line;
+    //helper function to create lines
+    const createLinesHelper = (party) =>
+      party.strings.map((string) => {
+        const line = document.createElement('div');
+        line.classList.add('line');
+        line.textContent = string;
+        return line;
+      });
+
+    beforeEach(() => {
+      textExample = document.createElement('div');
+      input = document.createElement('input');
+      document.body.appendChild(textExample);
     });
 
-  beforeEach(() => {
-    textExample = document.createElement('div');
-    input = document.createElement('input');
-    document.body.appendChild(textExample);
-  });
-
-  afterEach(() => {
-    document.body.removeChild(textExample);
-  });
-
-  it('should correctly update the view with multiple lines', () => {
-    const party = {
-      strings: ['Lorem ipsum', 'dolor sit amet'],
-      currentStringIndex: 0,
-      maxShowStrings: 2,
-      currentPressedIndex: 0,
-      errors: [],
-    };
-
-    createLinesHelper(party).forEach((line) => {
-      textExample.appendChild(line);
+    afterEach(() => {
+      document.body.removeChild(textExample);
     });
 
-    viewUpdate(party, textExample);
+    it('should correctly update the view with multiple lines', () => {
+      const party = {
+        strings: ['Lorem ipsum', 'dolor sit amet'],
+        currentStringIndex: 0,
+        maxShowStrings: 2,
+        currentPressedIndex: 0,
+        errors: [],
+      };
 
-    const updatedLines = textExample.querySelectorAll('.line');
+      createLinesHelper(party).forEach((line) => {
+        textExample.appendChild(line);
+      });
 
-    expect(updatedLines.length).toBe(2);
-  });
+      viewUpdate(party, textExample);
 
-  it('should correctly update the view when the end of the text is reached', () => {
-    const party = {
-      strings: ['Lorem ipsum', 'dolor sit amet', 'consectetur adipiscing elit'],
-      currentStringIndex: 2,
-      maxShowStrings: 2,
-      currentPressedIndex: 14,
-      errors: [],
-    };
+      const updatedLines = textExample.querySelectorAll('.line');
 
-    createLinesHelper(party).forEach((line) => {
-      textExample.appendChild(line);
+      expect(updatedLines.length).toBe(2);
     });
 
-    viewUpdate(party, textExample);
+    it('should correctly update the view when the end of the text is reached', () => {
+      const party = {
+        strings: [
+          'Lorem ipsum',
+          'dolor sit amet',
+          'consectetur adipiscing elit',
+        ],
+        currentStringIndex: 2,
+        maxShowStrings: 2,
+        currentPressedIndex: 14,
+        errors: [],
+      };
 
-    const updatedLines = textExample.querySelectorAll('.line');
-    const lastLineText = updatedLines[updatedLines.length - 1]?.textContent;
-    const hintSpans = textExample.querySelectorAll('.hint');
+      createLinesHelper(party).forEach((line) => {
+        textExample.appendChild(line);
+      });
 
-    expect(updatedLines.length).toBe(party.strings.length);
-    expect(lastLineText).toBe(party.strings[2]);
-    expect(hintSpans.length).toBe(0);
+      viewUpdate(party, textExample);
+
+      const updatedLines = textExample.querySelectorAll('.line');
+      const lastLineText = updatedLines[updatedLines.length - 1]?.textContent;
+      const hintSpans = textExample.querySelectorAll('.hint');
+
+      expect(updatedLines.length).toBe(party.strings.length);
+      expect(lastLineText).toBe(party.strings[2]);
+      expect(hintSpans.length).toBe(0);
+    });
   });
 });

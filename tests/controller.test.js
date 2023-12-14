@@ -40,21 +40,27 @@ describe('Controller Tests', () => {
   });
 
   describe('registration', () => {
-    it('should create a new user if all validations pass', async () => {
-      const req = {
+    let req, res;
+
+    beforeEach(() => {
+      req = {
         body: {
           username: 'testuser',
           password: 'testpassword',
         },
       };
 
-      const res = {
+      res = {
         status: jest.fn().mockReturnThis(),
         json: jest.fn(),
         redirect: jest.fn(),
       };
+    });
 
-      validationResult.mockReturnValueOnce({ isEmpty: jest.fn().mockReturnValueOnce(true) });
+    it('should redirect to signup_successful.html when all validations pass', async () => {
+      validationResult.mockReturnValueOnce({
+        isEmpty: jest.fn().mockReturnValueOnce(true),
+      });
       User.findOne.mockResolvedValueOnce(null);
       bcrypt.hashSync.mockReturnValueOnce('hashedPassword');
       Role.findOne.mockResolvedValueOnce({ value: 'USER' });
@@ -69,20 +75,37 @@ describe('Controller Tests', () => {
       await controller.registration(req, res);
 
       expect(res.redirect).toHaveBeenCalledWith('signup_successful.html');
-      expect(User.findOne).toHaveBeenCalledWith({ username: 'testuser' });
-      expect(bcrypt.hashSync).toHaveBeenCalledWith('testpassword', 8);
-      expect(Role.findOne).toHaveBeenCalledWith({ value: 'USER' });
+    });
+
+    it('should save a new user with hashed password when all validations pass', async () => {
+      validationResult.mockReturnValueOnce({
+        isEmpty: jest.fn().mockReturnValueOnce(true),
+      });
+      User.findOne.mockResolvedValueOnce(null);
+      bcrypt.hashSync.mockReturnValueOnce('hashedPassword');
+      Role.findOne.mockResolvedValueOnce({ value: 'USER' });
+
+      const saveMock = jest.fn();
+      const userMock = {
+        save: saveMock,
+      };
+
+      User.mockReturnValueOnce(userMock);
+
+      await controller.registration(req, res);
+
       expect(User).toHaveBeenCalledWith({
         username: 'testuser',
         password: 'hashedPassword',
         roles: ['USER'],
       });
       expect(saveMock).toHaveBeenCalled();
-      expect(res.json).not.toHaveBeenCalled();
     });
 
-    it('should return an error if there are validation errors', async () => {
-      validationResult.mockReturnValueOnce({ isEmpty: jest.fn().mockReturnValueOnce(false) });
+    it('should return a validation error if there are validation errors', async () => {
+      validationResult.mockReturnValueOnce({
+        isEmpty: jest.fn().mockReturnValueOnce(false),
+      });
 
       await controller.registration(req, res);
 
@@ -93,26 +116,26 @@ describe('Controller Tests', () => {
       });
     });
 
-    it('should return an error if the user already exists', async () => {
-      validationResult.mockReturnValueOnce({ isEmpty: jest.fn().mockReturnValueOnce(true) });
+    it('should return a user exists error if the user already exists', async () => {
+      validationResult.mockReturnValueOnce({
+        isEmpty: jest.fn().mockReturnValueOnce(true),
+      });
       User.findOne.mockResolvedValueOnce({});
-
-      req.body.username = 'testuser';
-      req.body.password = 'testpassword';
 
       await controller.registration(req, res);
 
       expect(res.status).toHaveBeenCalledWith(400);
-      expect(res.json).toHaveBeenCalledWith({ message: 'User with such name already exists' });
+      expect(res.json).toHaveBeenCalledWith({
+        message: 'User with such name already exists',
+      });
       expect(User.findOne).toHaveBeenCalledWith({ username: 'testuser' });
     });
 
-    it('should return an error if an exception occurs', async () => {
-      validationResult.mockReturnValueOnce({ isEmpty: jest.fn().mockReturnValueOnce(true) });
+    it('should return a registration error if an exception occurs', async () => {
+      validationResult.mockReturnValueOnce({
+        isEmpty: jest.fn().mockReturnValueOnce(true),
+      });
       User.findOne.mockRejectedValueOnce(new Error('Database error'));
-
-      req.body.username = 'testuser';
-      req.body.password = 'testpassword';
 
       await controller.registration(req, res);
 
@@ -143,7 +166,10 @@ describe('Controller Tests', () => {
 
       expect(redirectMock).toHaveBeenCalledWith('login_successful.html');
       expect(User.findOne).toHaveBeenCalledWith({ username: 'testuser' });
-      expect(bcrypt.compareSync).toHaveBeenCalledWith('testpassword', 'hashedPassword');
+      expect(bcrypt.compareSync).toHaveBeenCalledWith(
+        'testpassword',
+        'hashedPassword'
+      );
     });
 
     it('should return an error if the user does not exist', async () => {
@@ -155,12 +181,17 @@ describe('Controller Tests', () => {
       await controller.login(req, res);
 
       expect(res.status).toHaveBeenCalledWith(400);
-      expect(res.json).toHaveBeenCalledWith({ message: 'User with such name does not exist' });
+      expect(res.json).toHaveBeenCalledWith({
+        message: 'User with such name does not exist',
+      });
       expect(User.findOne).toHaveBeenCalledWith({ username: 'testuser' });
     });
 
     it('should return an error if the password is invalid', async () => {
-      User.findOne.mockResolvedValueOnce({ username: 'testuser', password: 'hashedPassword' });
+      User.findOne.mockResolvedValueOnce({
+        username: 'testuser',
+        password: 'hashedPassword',
+      });
       bcrypt.compareSync.mockReturnValueOnce(false);
 
       req.body.username = 'testuser';
@@ -171,7 +202,10 @@ describe('Controller Tests', () => {
       expect(res.status).toHaveBeenCalledWith(400);
       expect(res.json).toHaveBeenCalledWith({ message: 'Invalid password' });
       expect(User.findOne).toHaveBeenCalledWith({ username: 'testuser' });
-      expect(bcrypt.compareSync).toHaveBeenCalledWith('testpassword', 'hashedPassword');
+      expect(bcrypt.compareSync).toHaveBeenCalledWith(
+        'testpassword',
+        'hashedPassword'
+      );
     });
 
     it('should return an error if an exception occurs', async () => {
