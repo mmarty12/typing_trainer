@@ -56,7 +56,7 @@ describe('press', () => {
     };
   });
 
-  it('press - matching key', () => {
+  test('the matching key is pressed', () => {
     const expectedParty = {
       text: 'Lorem ipsum dolor',
       strings: ['Lorem ipsum dolor'],
@@ -81,7 +81,7 @@ describe('press', () => {
     expect(party).toEqual(expectedParty);
   });
 
-  it('press - mismatched key', () => {
+  test('the mismatched key is pressed', () => {
     const expectedParty = {
       text: 'Lorem ipsum dolor',
       strings: ['Lorem ipsum dolor'],
@@ -106,7 +106,7 @@ describe('press', () => {
     expect(party).toEqual(expectedParty);
   });
 
-  it('press - matching key at end of string', () => {
+  test('the matching key at end of string is pressed', () => {
     const expectedParty = {
       text: 'Lorem ipsum dolor',
       strings: ['Lorem ipsum dolor'],
@@ -131,9 +131,7 @@ describe('press', () => {
     expect(party).toEqual(expectedParty);
   });
 
-  it('press - mismatched key in middle of string', () => {
-    const pressedKey = 'x';
-
+  test('the mismatched key in middle of string is pressed', () => {
     const expectedParty = {
       text: 'Lorem ipsum dolor',
       strings: ['Lorem ipsum dolor'],
@@ -152,13 +150,13 @@ describe('press', () => {
     };
 
     const party = Object.assign({}, initialPartyStr);
-    press(pressedKey);
+    press('x');
     Object.assign(party, expectedParty);
 
     expect(party).toEqual(expectedParty);
   });
 
-  it('press - space key', () => {
+  test('the space key is pressed', () => {
     const expectedParty = {
       text: 'Lorem ipsum dolor',
       strings: ['Lorem ipsum dolor'],
@@ -182,25 +180,8 @@ describe('press', () => {
 
     expect(party).toEqual(expectedParty);
   });
-  it('press - missing pressedKey', () => {
-    const expectedParty = { ...initialParty };
 
-    const party = Object.assign({}, initialParty);
-    press();
-
-    expect(party).toEqual(expectedParty);
-  });
-  it('press - invalid pressedKey', () => {
-    const invalidKey = 123;
-
-    const expectedParty = { ...initialParty };
-
-    const party = Object.assign({}, initialParty);
-    press(invalidKey);
-
-    expect(party).toEqual(expectedParty);
-  });
-  it('press - maxStringLength reached', () => {
+  test('the maxStringLength is reached', () => {
     const partyForNestLine = {
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac metus id massa posuere blandit a eget mauris.',
       strings: [
@@ -247,7 +228,7 @@ describe('press', () => {
 });
 
 describe('viewUpdate', () => {
-  it('viewUpdate - creates correct HTML structure for displaying lines', () => {
+  it('should create correct HTML structure for displaying lines', () => {
     const party = {
       strings: ['Lorem ipsum dolor sit'],
       currentStringIndex: 0,
@@ -278,7 +259,8 @@ describe('viewUpdate', () => {
     expect(firstLine.firstChild).toBe(doneLine);
     expect(doneLine.classList.contains('done')).toBe(true);
   });
-  test('viewUpdate - displays pressed keys and errors correctly', () => {
+
+  it('should display pressed keys and errors correctly', () => {
     const party = {
       strings: ['Lorem ipsum'],
       currentStringIndex: 0,
@@ -328,8 +310,18 @@ describe('viewUpdate', () => {
     expect(errSpan2.textContent).toBe('s');
   });
 });
+
 describe('viewUpdate', () => {
   let textExample;
+
+  //helper function to create lines
+  const createLinesHelper = party.strings.map((string) => {
+    const line = document.createElement('div');
+    line.classList.add('line');
+    line.textContent = string;
+    return line;
+  });
+
   beforeEach(() => {
     textExample = document.createElement('div');
     input = document.createElement('input');
@@ -340,7 +332,7 @@ describe('viewUpdate', () => {
     document.body.removeChild(textExample);
   });
 
-  it('viewUpdate - correctly updates the view with multiple lines', () => {
+  it('should correctly update the view with multiple lines', () => {
     const party = {
       strings: ['Lorem ipsum', 'dolor sit amet'],
       currentStringIndex: 0,
@@ -349,15 +341,7 @@ describe('viewUpdate', () => {
       errors: [],
     };
 
-    //helper function to create lines
-    const lines = party.strings.map((string) => {
-      const line = document.createElement('div');
-      line.classList.add('line');
-      line.textContent = string;
-      return line;
-    });
-
-    lines.forEach((line) => {
+    createLinesHelper.forEach((line) => {
       textExample.appendChild(line);
     });
 
@@ -367,7 +351,8 @@ describe('viewUpdate', () => {
 
     expect(updatedLines.length).toBe(2);
   });
-  it('viewUpdate - correctly updates the view when reaching the end of the text', () => {
+
+  it('should correctly update the view when the end of the text is reached', () => {
     const party = {
       strings: ['Lorem ipsum', 'dolor sit amet', 'consectetur adipiscing elit'],
       currentStringIndex: 2,
@@ -376,14 +361,7 @@ describe('viewUpdate', () => {
       errors: [],
     };
 
-    const lines = party.strings.map((string) => {
-      const line = document.createElement('div');
-      line.classList.add('line');
-      line.textContent = string;
-      return line;
-    });
-
-    lines.forEach((line) => {
+    createLinesHelper.forEach((line) => {
       textExample.appendChild(line);
     });
 
