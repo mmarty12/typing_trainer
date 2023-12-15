@@ -172,7 +172,7 @@ function press(pressedKey) {
   }
 }
 
-function statisticCount(party, settings) {
+function statisticCount() {
   if (party.started) {
     const symbolsPerMinute =
       party.timerCounter !== 0
