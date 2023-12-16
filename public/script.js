@@ -1,5 +1,3 @@
-import text from './texts.js';
-
 const settings = {
   input: document.querySelector('input'),
   letters: Array.from(document.querySelectorAll('[data-letters]')),
@@ -11,9 +9,10 @@ const settings = {
   restartBtn: document.querySelector('#button-again'),
   modal: document.querySelector('.modal'),
 };
+const limit = 30;
 
 const party = {
-  text,
+  text: null,
   strings: [],
   maxStringLength: 70,
   maxShowStrings: 5,
@@ -29,8 +28,26 @@ const party = {
   statisticFlag: false,
 };
 
-createParty();
-init();
+fetch('https://api.api-ninjas.com/v1/facts?limit=' + limit, {
+  method: 'GET',
+  headers: {
+    'X-Api-Key': 'jIx09duDP4CP8cgkv9psxg==ovWjImlK67GSLMM8',
+  },
+})
+  .then(function (response) {
+    if (!response.ok) {
+      throw new Error('Network response was not ok: ' + response.status);
+    }
+    return response.json();
+  })
+  .then(function (data) {
+    party.text = data[0].fact;
+    createParty();
+    init();
+  })
+  .catch(function (error) {
+    console.error('Error:', error.message);
+  });
 
 function init() {
   settings.input.addEventListener('keydown', keyDownHandler);
@@ -150,7 +167,7 @@ function press(pressedKey) {
   viewUpdate(settings.textExample);
 }
 
-function statisticCount(party, settings) {
+function statisticCount() {
   if (party.started) {
     const symbolsPerMinute =
       party.timerCounter !== 0
