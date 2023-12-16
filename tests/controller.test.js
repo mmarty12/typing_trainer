@@ -1,16 +1,16 @@
-const Сontroller = require('../controller');
-const User = require('../user');
-const Role = require('../roles');
+const Сontroller = require('../database/controller.js');
+const User = require('../database/user');
+const Role = require('../database/roles');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { secret } = require('../config');
+const { secret } = require('../public/config.js');
 const { validationResult } = require('express-validator');
 
-jest.mock('../user');
-jest.mock('../roles');
+jest.mock('../database/user');
+jest.mock('../database/roles');
 jest.mock('bcryptjs');
 jest.mock('jsonwebtoken');
-jest.mock('../config');
+jest.mock('../public/config');
 jest.mock('express-validator');
 
 describe('Controller Tests', () => {
@@ -166,10 +166,7 @@ describe('Controller Tests', () => {
 
       expect(redirectMock).toHaveBeenCalledWith('login_successful.html');
       expect(User.findOne).toHaveBeenCalledWith({ username: 'testuser' });
-      expect(bcrypt.compareSync).toHaveBeenCalledWith(
-        'testpassword',
-        'hashedPassword'
-      );
+      expect(bcrypt.compareSync).toHaveBeenCalledWith('testpassword', 'hashedPassword');
     });
 
     it('should return an error if the user does not exist', async () => {
@@ -202,10 +199,7 @@ describe('Controller Tests', () => {
       expect(res.status).toHaveBeenCalledWith(400);
       expect(res.json).toHaveBeenCalledWith({ message: 'Invalid password' });
       expect(User.findOne).toHaveBeenCalledWith({ username: 'testuser' });
-      expect(bcrypt.compareSync).toHaveBeenCalledWith(
-        'testpassword',
-        'hashedPassword'
-      );
+      expect(bcrypt.compareSync).toHaveBeenCalledWith('testpassword', 'hashedPassword');
     });
 
     it('should return an error if an exception occurs', async () => {

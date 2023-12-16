@@ -3,7 +3,7 @@ const User = require('./user');
 const Role = require('./roles');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { secret } = require('./config');
+const { secret } = require('../public/config');
 const { validationResult } = require('express-validator');
 
 const generateAccessToken = (id, roles) => {
