@@ -1,8 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const router = require('./routers');
-const Controller = require('./controller');
+const router = require('./database/routers');
+const Controller = require('./database/controller');
 const controller = new Controller();
 const { registration } = controller;
 const { login } = controller;
